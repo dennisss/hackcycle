@@ -1,0 +1,12 @@
+{
+	"name": "hackcycle",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"underscore": "latest",
+		"express": "latest"
+	},
+	"devDependencies": {
+
+	}
+}
