@@ -15,8 +15,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ecn.ptam.PTAM;
@@ -75,6 +77,17 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
 
 
+
+
+        Button btn = (Button) findViewById(R.id.button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Socket.inst.send_data(LocationSensor.lastlocation, true);
+
+            }
+        });
 
 
 

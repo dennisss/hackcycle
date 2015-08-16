@@ -23,7 +23,9 @@ import com.google.android.gms.wearable.WearableStatusCodes;
 
 import java.util.List;
 
-
+/**
+ * Created by uwe on 01.04.15.
+ */
 public class HeartbeatService extends Service implements SensorEventListener {
 
     private SensorManager mSensorManager;
@@ -61,6 +63,13 @@ public class HeartbeatService extends Service implements SensorEventListener {
         super.onCreate();
         // register us as a sensor listener
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        Log.i("Sensor", "" + Sensor.TYPE_HEART_RATE);
+        for(Sensor s : mSensorManager.getSensorList(Sensor.TYPE_ALL)){
+            Log.i("Sensor", s.getName() + " " + s.getType());
+
+        }
+
         Sensor mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
         // delay SENSOR_DELAY_UI is sufficiant
         boolean res = mSensorManager.registerListener(this, mHeartRateSensor,  SensorManager.SENSOR_DELAY_UI);

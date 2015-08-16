@@ -105,8 +105,35 @@ function initMap() {
 
 			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
 
+			var url = data.image;
+
 			var infowindow = new google.maps.InfoWindow({
 				content: '<img style="width: 100%; height: 100%" src="' + data.image + '" />'
+				+ '<a href="http://www.facebook.com/sharer.php?u=cycle.denniss.me:8080/'+url+'" target="_blank" title="Share with Facebook">' +
+				'<img src="/images/facebook.jpg" alt="Facebook" />'+
+				'</a>'+
+
+				'<!-- Google+ -->'+
+				'<a href="https://plus.google.com/share?url=cycle.denniss.me:8080/'+url+'" target="_blank" title="Share with Google+">'+
+				'<img src="/images/gplus.jpg" alt="Google" />'+
+				'</a>'+
+
+				'<!-- Reddit -->'+
+				'<a href="http://reddit.com/submit?url=cycle.denniss.me:8080/'+url+'&amp;title=My motorcycle trip" target="_blank" title="Share with Reddit">'+
+				'<img src="/images/reddit.jpg" alt="Reddit" />'+
+				'</a>'+
+
+				'<!-- StumbleUpon-->'+
+				'<a href="http://www.stumbleupon.com/submit?url=cycle.denniss.me:8080/'+url+'&amp;title=My Motorcycle Trip" target="_blank" title="Share with StumbleUpon">'+
+				'<img src="/images/stumble.jpg" alt="StumbleUpon" />'+
+				'</a>'+
+
+				'<!-- Twitter -->'+
+				'<a href="https://twitter.com/share?url=cycle.denniss.me:8080/'+url+'&amp;text=My motorcycle trip&amp;hashtags=gomoto" target="_blank" title="Share with Twitter">'+
+				'<img src="/images/twitter.jpg" alt="Twitter" />'+
+				'</a>'
+
+
 			});
 
 			marker.addListener('click', function() {
@@ -132,7 +159,7 @@ function initMap() {
 
 
 
-
+	/*
 	var ctx = document.getElementById("myChart").getContext("2d");
 
 
@@ -156,17 +183,15 @@ function initMap() {
 
 	});
 
-	/*
-
-
-	*/
 
 	chart.addData([50, 60], ["1", "2"])
+	*/
+
 
 	socket.on('beat', function(data){
 		console.log(data);
 
-		document.getElementById('heartText').innerText = data.bpm;
+		document.getElementById('heartText').innerText = data.bpm + ' bpm';
 
 
 	})
