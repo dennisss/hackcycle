@@ -3,7 +3,8 @@
 
 var fs = require('fs'),
 	mkdirp = require('mkdirp'),
-	mongoose = require('mongoose');
+	mongoose = require('mongoose'),
+	async = require('async');
 
 
 
@@ -73,27 +74,49 @@ module.exports = function(server){
 
 
         socket.on('data', function(data){ // Receive position data about the trip
-            console.log(data);
 
-			socket.broadcast.emit('data', data);
 
-			for(var i = 0; i < data.length; i++){
-
-				var pdata = data[i];
+			async.map(data, function(pdata, callback){
 
 				var p = new Point(pdata);
+				console.log('adding point ' + p.id);
+
 				if(pdata.image_data){
 
 					save_image(p.id, pdata.image_data, function(err, path){
+						console.log(path)
 						if(err)
 							console.log(err)
 						else{
 							p.image = path;
-							p.save(function(err){});
+							p.save(function(err){
+								callback(err, p);
+							});
 						}
 					})
 				}
-			}
+				else{
+					p.save(function(err){
+						callback(err, p);
+					})
+				}
+
+
+
+			}, function(err, points){
+
+				if(err)
+					console.log(err);
+
+				socket.broadcast.emit('data', _.map(points, function(p){
+					return {
+						id: p.id,
+						lat: p.lat,
+						lon: p.lon,
+						image: p.image
+					};
+				}));
+			})
 
         });
 

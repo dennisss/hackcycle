@@ -65,13 +65,20 @@ public class Socket {
 	}
 
 
-	public void send_data(Location loc){
+    public void send_data(Location loc){
+        send_data(loc, false);
+    }
+
+	public void send_data(Location loc, boolean send_image){
 
 		JSONObject obj = new JSONObject();
 
 		try {
 			obj.put("lat", loc.getLatitude());
 			obj.put("lon", loc.getLongitude());
+
+            if(send_image)
+                obj.put("image_data", MainActivity.encodeTobase64(MainActivity.lastframe));
 
 		} catch (JSONException e) {
 			e.printStackTrace();

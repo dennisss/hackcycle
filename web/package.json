@@ -9,7 +9,8 @@
 		"mkdirp": "latest",
 		"mongoose": "latest",
 		"mongodb": "latest",
-		"underscore": "latest"
+		"underscore": "latest",
+		"async": "latest"
 	},
 	"devDependencies": {
 

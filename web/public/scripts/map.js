@@ -75,6 +75,7 @@ function initMap() {
 	*/
 
 
+	var last_point = null;
 	function add_point(data, tid){
 
 		var marker = new google.maps.Marker({
@@ -85,9 +86,27 @@ function initMap() {
 		});
 
 
+		if(last_point != null){ // Make a line
+
+			var poly = new google.maps.Polyline({
+				strokeColor: '#FF0000',
+				strokeOpacity: 1.0,
+				strokeWeight: 3,
+				map: map,
+			});
+			poly.setPath([last_point.getPosition(), marker.getPosition()]);
+
+		}
+		last_point = marker;
+
+
+
 		if(data.image){
+
+			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+
 			var infowindow = new google.maps.InfoWindow({
-				content: '<img src="' + data.image + '" />'
+				content: '<img style="width: 100%; height: 100%" src="' + data.image + '" />'
 			});
 
 			marker.addListener('click', function() {
@@ -110,6 +129,49 @@ function initMap() {
 		}
 
 	});
+
+
+
+
+	var ctx = document.getElementById("myChart").getContext("2d");
+
+
+	var data = {
+		labels: ["1"],
+		datasets: [
+			{
+				label: "Heart rate",
+				fillColor: "rgba(220,220,220,0.2)",
+				strokeColor: "rgba(220,220,220,1)",
+				pointColor: "rgba(220,220,220,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(220,220,220,1)",
+				data: []
+			},
+		]
+	};
+
+	var chart = new Chart(ctx).Line(data, {
+
+	});
+
+	/*
+
+
+	*/
+
+	chart.addData([50, 60], ["1", "2"])
+
+	socket.on('beat', function(data){
+		console.log(data);
+
+		document.getElementById('heartText').innerText = data.bpm;
+
+
+	})
+
+
 
 }
 
