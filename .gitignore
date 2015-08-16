@@ -1,5 +1,18 @@
+*.o.d
+*.o
+*.so
+*.class
+
+ext/
+
+app/ndk-modules
+web/components
 
 web/node_modules
+
+app/app/build
+app/opencv/build
+app/wear/build
 
 app/.gradle
 app/local.properties

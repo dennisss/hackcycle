@@ -11,6 +11,13 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    sourceSets.main {
+        jniLibs.srcDir 'src/main/libs'
+        jni.srcDirs = [];
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -19,9 +26,26 @@ android {
     }
 }
 
+
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn ndkBuild
+}
+
+task ndkBuild(type: Exec) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def ndkbuild = properties.getProperty('ndk.dir', null)+"/ndk-build"
+    commandLine ndkbuild, '-C', file('src/main/jni').absolutePath
+}
+
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     wearApp project(':wear')
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.google.android.gms:play-services:7.8.0'
+    compile files('libs/socketio.jar')
+    //compile files('libs/opencv library - 2.4.10.jar')
+    compile project(':opencv')
 }

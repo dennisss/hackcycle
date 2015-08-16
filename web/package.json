@@ -4,7 +4,12 @@
 	"private": true,
 	"dependencies": {
 		"underscore": "latest",
-		"express": "latest"
+		"express": "latest",
+        "socket.io": "0.9.16",
+		"mkdirp": "latest",
+		"mongoose": "latest",
+		"mongodb": "latest",
+		"underscore": "latest"
 	},
 	"devDependencies": {
 
